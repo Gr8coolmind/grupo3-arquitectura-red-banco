@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', Roboto, sans-serif;
+    background-color: #F4F5F9;
+    color: #162447;
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Merriweather', Georgia, serif;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .glass-dark {
+    background: rgba(22, 36, 71, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(201, 162, 39, 0.2);
+  }
+
+  .text-shadow {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+
+  .gradient-navy {
+    background: linear-gradient(135deg, #0d1a33 0%, #162447 50%, #1e3a6e 100%);
+  }
+
+  .gradient-gold {
+    background: linear-gradient(135deg, #a07e1a 0%, #C9A227 50%, #e8b830 100%);
+  }
+
+  .zone-perimeter { background-color: #37474F; }
+  .zone-core { background-color: #4A148C; }
+  .zone-dmz { background-color: #E67E22; }
+  .zone-offices { background-color: #1565C0; }
+  .zone-critical { background-color: #8B0000; }
+
+  .card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  }
+
+  .slide-enter {
+    animation: fadeIn 0.45s ease-out;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #1e3a6e20;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #C9A227;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #e8b830;
+  }
+
+  /* Slide navigation dots */
+  .slide-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.35);
+    transition: all 0.25s ease;
+    cursor: pointer;
+  }
+  .slide-dot.active {
+    background: #C9A227;
+    width: 24px;
+    border-radius: 4px;
+  }
+
+  /* Network diagram */
+  .node-hover {
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+  .node-hover:hover {
+    filter: brightness(1.2) drop-shadow(0 0 8px rgba(201, 162, 39, 0.6));
+  }
+
+  /* Firewall result animations */
+  @keyframes resultPop {
+    0% { transform: scale(0.85); opacity: 0; }
+    60% { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .result-pop {
+    animation: resultPop 0.35s ease-out;
+  }
+
+  /* Drawer slide in */
+  @keyframes drawerSlide {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  .drawer-slide {
+    animation: drawerSlide 0.3s ease-out;
+  }
+
+  /* Presentation mode: fullscreen */
+  .presentation-mode {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+  }
+}

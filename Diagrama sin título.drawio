@@ -1,0 +1,224 @@
+<mxfile host="Electron">
+  <diagram name="Página-1" id="raOUhyVXt4TiQKvDIIsw">
+    <mxGraphModel dx="1414" dy="841" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" mermaidData="{&#xa;  &quot;data&quot;: &quot;graph TD\n    %% ==========================================\n    %% DIAGRAMA DE ARQUITECTURA DE RED SEGURA - BANCO\n    %% Actividad Academica - Grupo 3\n    %% ==========================================\n\n    subgraph PERIMETRO[\&quot;ZONA DE PERIMETRO EXTERNO\&quot;]\n        INET((\&quot;INTERNET&lt;br/&gt;Clientes / Publico General\&quot;))\n        VPN[/\&quot;Tunel VPN Site-to-Site&lt;br/&gt;Sucursales Remotas\&quot;/]\n    end\n\n    subgraph NUCLEO[\&quot;NUCLEO DE SEGURIDAD PERIMETRAL\&quot;]\n        FW{{\&quot;NGFW&lt;br/&gt;FIREWALL DE NUEVA GENERACION&lt;br/&gt;(Punto Unico de Inspeccion)\&quot;}}\n        IDS[[\&quot;IDS / IPS&lt;br/&gt;Sistema de Deteccion de Intrusos&lt;br/&gt;(Monitoreo - SPAN Port)\&quot;]]\n    end\n\n    subgraph DMZ[\&quot;ZONA DESMILITARIZADA (DMZ)\&quot;]\n        WEB((\&quot;Servidor Banca en Linea&lt;br/&gt;Plataforma Web Transaccional\&quot;))\n    end\n\n    subgraph OFICINAS[\&quot;RED INTERNA - OFICINAS ADMINISTRATIVAS\&quot;]\n        SW_OFI[/\&quot;Switch de Distribucion&lt;br/&gt;Oficinas\&quot;/]\n        PC_EMP((\&quot;PCs Empleados&lt;br/&gt;Operacion Diaria\&quot;))\n        PC_GER((\&quot;PCs Gerencia&lt;br/&gt;Acceso Administrativo\&quot;))\n    end\n\n    subgraph CRITICA[\&quot;RED CRITICA AISLADA - ALTA SEGURIDAD\&quot;]\n        SW_CORE[/\&quot;Switch Core&lt;br/&gt;Segmento Air-Gapped Logico\&quot;/]\n        DB[(\&quot;Datacenter&lt;br/&gt;Base de Datos Principal&lt;br/&gt;(Core Bancario)\&quot;)]\n        ATM((\&quot;Cajeros Automaticos&lt;br/&gt;Red ATM Dedicada\&quot;))\n    end\n\n    %% ==========================================\n    %% FLUJO DE CONEXIONES CON REGLAS DE FIREWALL\n    %% ==========================================\n\n    INET ==&gt;|\&quot;Permitir SOLO HTTPS&lt;br/&gt;Puerto 443 - Inspeccion SSL\&quot;| FW\n    VPN ==&gt;|\&quot;Trafico Cifrado IPSec&lt;br/&gt;Autenticacion Mutua\&quot;| FW\n\n    FW -.-&gt;|\&quot;Espejo de Trafico&lt;br/&gt;(Port Mirroring)\&quot;| IDS\n    IDS -.-&gt;|\&quot;Alertas en Tiempo Real&lt;br/&gt;Bloqueo Automatico\&quot;| FW\n\n    FW ==&gt;|\&quot;Permitir SOLO HTTPS&lt;br/&gt;Denegar todo lo demas\&quot;| WEB\n\n    FW ==&gt;|\&quot;Salida a Internet Filtrada&lt;br/&gt;Proxy Web / Control de Contenido\&quot;| SW_OFI\n    SW_OFI --&gt; PC_EMP\n    SW_OFI --&gt; PC_GER\n\n    FW ==&gt;|\&quot;BLOQUEO TOTAL desde Oficinas&lt;br/&gt;Sin excepcion directa\&quot;| SW_CORE\n\n    WEB -.-&gt;|\&quot;Consulta Autorizada y Auditada&lt;br/&gt;Puerto 1433/3306 - Solo Lectura\&quot;| SW_CORE\n\n    SW_CORE --&gt; DB\n    SW_CORE ==&gt;|\&quot;Protocolo Cifrado Propietario&lt;br/&gt;Canal Dedicado ATM\&quot;| ATM\n\n    %% ==========================================\n    %% ESTILOS PROFESIONALES (classDef)\n    %% ==========================================\n\n    classDef perimetro fill:#37474f,stroke:#1c262b,stroke-width:2px,color:#ffffff,font-weight:bold,rx:8,ry:8\n    classDef nucleo fill:#4a148c,stroke:#1a0033,stroke-width:3px,color:#ffffff,font-weight:bold,rx:8,ry:8\n    classDef dmz fill:#ff9800,stroke:#e65100,stroke-width:2px,color:#1a1a1a,font-weight:bold,rx:8,ry:8\n    classDef oficinas fill:#1565c0,stroke:#0d47a1,stroke-width:2px,color:#ffffff,font-weight:bold,rx:8,ry:8\n    classDef critica fill:#8b0000,stroke:#4a0000,stroke-width:3px,color:#ffffff,font-weight:bold,rx:8,ry:8\n\n    class INET,VPN perimetro\n    class FW,IDS nucleo\n    class WEB dmz\n    class SW_OFI,PC_EMP,PC_GER oficinas\n    class SW_CORE,DB,ATM critica\n\n    style PERIMETRO fill:#eceff1,stroke:#455a64,stroke-width:2px\n    style NUCLEO fill:#ede7f6,stroke:#4a148c,stroke-width:2px\n    style DMZ fill:#fff3e0,stroke:#e65100,stroke-width:2px\n    style OFICINAS fill:#e3f2fd,stroke:#0d47a1,stroke-width:2px\n    style CRITICA fill:#ffebee,stroke:#8b0000,stroke-width:3px&quot;,&#xa;  &quot;config&quot;: null&#xa;}" id="mV-ksIXwEmNgvF4IsC9P-28">
+          <mxCell connectable="0" parent="1" style="group;transparentBounds=1;editIcon=1;lockedGroup=0;groupPadding=20;" vertex="1">
+            <mxGeometry as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="ZONA DE PERIMETRO EXTERNO" mermaidId="n:PERIMETRO" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;verticalAlign=top;fillColor=#eceff1;strokeColor=#455a64;fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="ZONA DE PERIMETRO EXTERNO" id="mV-ksIXwEmNgvF4IsC9P-29">
+          <mxCell parent="mV-ksIXwEmNgvF4IsC9P-28" style="html=1;whiteSpace=wrap;strokeWidth=2;verticalAlign=top;fillColor=#eceff1;strokeColor=#455a64;fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="289" width="551" x="519" y="40" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="INTERNET&#xa;Clientes / Publico General" mermaidId="n:INET" mermaidBaseStyle="ellipse;html=1;aspect=fixed;strokeWidth=2;whiteSpace=wrap;fillColor=#37474f;strokeColor=#1c262b;fontColor=#ffffff;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;fontStyle=1;" mermaidBaseValue="INTERNET&#xa;Clientes / Publico General" id="mV-ksIXwEmNgvF4IsC9P-30">
+          <mxCell parent="mV-ksIXwEmNgvF4IsC9P-29" style="ellipse;html=1;aspect=fixed;strokeWidth=2;whiteSpace=wrap;fillColor=#37474f;strokeColor=#1c262b;fontColor=#ffffff;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;fontStyle=1;" vertex="1">
+            <mxGeometry height="219" width="219" x="297" y="45" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Tunel VPN Site-to-Site&#xa;Sucursales Remotas" mermaidId="n:VPN" mermaidBaseStyle="html=1;shape=parallelogram;perimeter=parallelogramPerimeter;fixedSize=1;size=26.5;strokeWidth=2;whiteSpace=wrap;fillColor=#37474f;strokeColor=#1c262b;fontColor=#ffffff;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;fontStyle=1;" mermaidBaseValue="Tunel VPN Site-to-Site&#xa;Sucursales Remotas" id="mV-ksIXwEmNgvF4IsC9P-31">
+          <mxCell parent="mV-ksIXwEmNgvF4IsC9P-29" style="html=1;shape=parallelogram;perimeter=parallelogramPerimeter;fixedSize=1;size=26.5;strokeWidth=2;whiteSpace=wrap;fillColor=#37474f;strokeColor=#1c262b;fontColor=#ffffff;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;fontStyle=1;" vertex="1">
+            <mxGeometry height="53" width="212" x="35" y="128" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="NUCLEO DE SEGURIDAD PERIMETRAL" mermaidId="n:NUCLEO" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;verticalAlign=top;fillColor=#ede7f6;strokeColor=#4a148c;fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="NUCLEO DE SEGURIDAD PERIMETRAL" id="mV-ksIXwEmNgvF4IsC9P-32">
+          <mxCell parent="mV-ksIXwEmNgvF4IsC9P-28" style="html=1;whiteSpace=wrap;strokeWidth=2;verticalAlign=top;fillColor=#ede7f6;strokeColor=#4a148c;fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="416" width="422" x="590" y="440" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="NGFW&#xa;FIREWALL DE NUEVA GENERACION&#xa;(Punto Unico de Inspeccion)" mermaidId="n:FW" mermaidBaseStyle="html=1;shape=hexagon;perimeter=hexagonPerimeter2;fixedSize=1;size=18.25;strokeWidth=3;whiteSpace=wrap;fillColor=#4a148c;strokeColor=#1a0033;fontColor=#ffffff;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;fontStyle=1;" mermaidBaseValue="NGFW&#xa;FIREWALL DE NUEVA GENERACION&#xa;(Punto Unico de Inspeccion)" id="mV-ksIXwEmNgvF4IsC9P-33">
+          <mxCell parent="mV-ksIXwEmNgvF4IsC9P-32" style="html=1;shape=hexagon;perimeter=hexagonPerimeter2;fixedSize=1;size=18.25;strokeWidth=3;whiteSpace=wrap;fillColor=#4a148c;strokeColor=#1a0033;fontColor=#ffffff;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;fontStyle=1;" vertex="1">
+            <mxGeometry height="73" width="272" x="35" y="45" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="IDS / IPS&#xa;Sistema de Deteccion de Intrusos&#xa;(Monitoreo - SPAN Port)" mermaidId="n:IDS" mermaidBaseStyle="html=1;strokeWidth=3;shape=process;whiteSpace=wrap;size=0.04;fillColor=#4a148c;strokeColor=#1a0033;fontColor=#ffffff;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;fontStyle=1;" mermaidBaseValue="IDS / IPS&#xa;Sistema de Deteccion de Intrusos&#xa;(Monitoreo - SPAN Port)" id="mV-ksIXwEmNgvF4IsC9P-34">
+          <mxCell parent="mV-ksIXwEmNgvF4IsC9P-32" style="html=1;strokeWidth=3;shape=process;whiteSpace=wrap;size=0.04;fillColor=#4a148c;strokeColor=#1a0033;fontColor=#ffffff;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;fontStyle=1;" vertex="1">
+            <mxGeometry height="73" width="269" x="118" y="318" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Espejo de Trafico&#xa;(Port Mirroring)" mermaidId="e:FW-&gt;IDS#0" mermaidBaseStyle="curved=1;dashed=1;dashPattern=2 3;fixDash=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=0.5477941176470589;exitY=1;entryX=0.5483271375464684;entryY=0;curved=1;exitX=1;exitY=1;entryX=1;entryY=1;" mermaidBaseValue="Espejo de Trafico&#xa;(Port Mirroring)" id="mV-ksIXwEmNgvF4IsC9P-35">
+          <mxCell edge="1" parent="mV-ksIXwEmNgvF4IsC9P-32" source="mV-ksIXwEmNgvF4IsC9P-33" style="curved=1;dashed=1;dashPattern=2 3;fixDash=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=1;exitY=1;entryX=1;entryY=1;rounded=0;" target="mV-ksIXwEmNgvF4IsC9P-34">
+            <mxGeometry relative="1" as="geometry">
+              <mxPoint as="offset" />
+              <Array as="points">
+                <mxPoint x="880" y="563" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Alertas en Tiempo Real&#xa;Bloqueo Automatico" mermaidId="e:IDS-&gt;FW#0" mermaidBaseStyle="curved=1;dashed=1;dashPattern=2 3;fixDash=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=0.4516728624535316;exitY=0;entryX=0.4522058823529412;entryY=1;curved=1;exitX=1;exitY=1;entryX=1;entryY=1;" mermaidBaseValue="Alertas en Tiempo Real&#xa;Bloqueo Automatico" id="mV-ksIXwEmNgvF4IsC9P-36">
+          <mxCell edge="1" parent="mV-ksIXwEmNgvF4IsC9P-32" source="mV-ksIXwEmNgvF4IsC9P-34" style="curved=1;dashed=1;dashPattern=2 3;fixDash=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=1;exitY=1;entryX=1;entryY=1;rounded=0;" target="mV-ksIXwEmNgvF4IsC9P-33">
+            <mxGeometry relative="1" as="geometry">
+              <mxPoint as="offset" />
+              <Array as="points">
+                <mxPoint x="712" y="563" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="ZONA DESMILITARIZADA (DMZ)" mermaidId="n:DMZ" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;verticalAlign=top;fillColor=#fff3e0;strokeColor=#e65100;fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="ZONA DESMILITARIZADA (DMZ)" id="mV-ksIXwEmNgvF4IsC9P-37">
+          <mxCell parent="mV-ksIXwEmNgvF4IsC9P-28" style="html=1;whiteSpace=wrap;strokeWidth=2;verticalAlign=top;fillColor=#fff3e0;strokeColor=#e65100;fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="316" width="316" x="40" y="583" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Servidor Banca en Linea&#xa;Plataforma Web Transaccional" mermaidId="n:WEB" mermaidBaseStyle="ellipse;html=1;aspect=fixed;strokeWidth=2;whiteSpace=wrap;fillColor=#ff9800;strokeColor=#e65100;fontColor=#1a1a1a;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;fontStyle=1;" mermaidBaseValue="Servidor Banca en Linea&#xa;Plataforma Web Transaccional" id="mV-ksIXwEmNgvF4IsC9P-38">
+          <mxCell parent="mV-ksIXwEmNgvF4IsC9P-37" style="ellipse;html=1;aspect=fixed;strokeWidth=2;whiteSpace=wrap;fillColor=#ff9800;strokeColor=#e65100;fontColor=#1a1a1a;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;fontStyle=1;" vertex="1">
+            <mxGeometry height="246" width="246" x="35" y="45" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="RED INTERNA - OFICINAS ADMINISTRATIVAS" mermaidId="n:OFICINAS" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=2;verticalAlign=top;fillColor=#e3f2fd;strokeColor=#0d47a1;fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="RED INTERNA - OFICINAS ADMINISTRATIVAS" id="mV-ksIXwEmNgvF4IsC9P-39">
+          <mxCell parent="mV-ksIXwEmNgvF4IsC9P-28" style="html=1;whiteSpace=wrap;strokeWidth=2;verticalAlign=top;fillColor=#e3f2fd;strokeColor=#0d47a1;fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="544" width="457" x="1319" y="680" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Switch de Distribucion&#xa;Oficinas" mermaidId="n:SW_OFI" mermaidBaseStyle="html=1;shape=parallelogram;perimeter=parallelogramPerimeter;fixedSize=1;size=26.5;strokeWidth=2;whiteSpace=wrap;fillColor=#1565c0;strokeColor=#0d47a1;fontColor=#ffffff;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;fontStyle=1;" mermaidBaseValue="Switch de Distribucion&#xa;Oficinas" id="mV-ksIXwEmNgvF4IsC9P-40">
+          <mxCell parent="mV-ksIXwEmNgvF4IsC9P-39" style="html=1;shape=parallelogram;perimeter=parallelogramPerimeter;fixedSize=1;size=26.5;strokeWidth=2;whiteSpace=wrap;fillColor=#1565c0;strokeColor=#0d47a1;fontColor=#ffffff;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;fontStyle=1;" vertex="1">
+            <mxGeometry height="53" width="214" x="138" y="45" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="PCs Empleados&#xa;Operacion Diaria" mermaidId="n:PC_EMP" mermaidBaseStyle="ellipse;html=1;aspect=fixed;strokeWidth=2;whiteSpace=wrap;fillColor=#1565c0;strokeColor=#0d47a1;fontColor=#ffffff;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;fontStyle=1;" mermaidBaseValue="PCs Empleados&#xa;Operacion Diaria" id="mV-ksIXwEmNgvF4IsC9P-41">
+          <mxCell parent="mV-ksIXwEmNgvF4IsC9P-39" style="ellipse;html=1;aspect=fixed;strokeWidth=2;whiteSpace=wrap;fillColor=#1565c0;strokeColor=#0d47a1;fontColor=#ffffff;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;fontStyle=1;" vertex="1">
+            <mxGeometry height="150" width="150" x="272" y="351" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="PCs Gerencia&#xa;Acceso Administrativo" mermaidId="n:PC_GER" mermaidBaseStyle="ellipse;html=1;aspect=fixed;strokeWidth=2;whiteSpace=wrap;fillColor=#1565c0;strokeColor=#0d47a1;fontColor=#ffffff;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;fontStyle=1;" mermaidBaseValue="PCs Gerencia&#xa;Acceso Administrativo" id="mV-ksIXwEmNgvF4IsC9P-42">
+          <mxCell parent="mV-ksIXwEmNgvF4IsC9P-39" style="ellipse;html=1;aspect=fixed;strokeWidth=2;whiteSpace=wrap;fillColor=#1565c0;strokeColor=#0d47a1;fontColor=#ffffff;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;fontStyle=1;" vertex="1">
+            <mxGeometry height="187" width="187" x="35" y="332" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:SW_OFI-&gt;PC_EMP#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.58;exitY=1;entryX=0.5;entryY=0;" mermaidBaseValue="" id="mV-ksIXwEmNgvF4IsC9P-43">
+          <mxCell edge="1" parent="mV-ksIXwEmNgvF4IsC9P-39" source="mV-ksIXwEmNgvF4IsC9P-40" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.58;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="mV-ksIXwEmNgvF4IsC9P-41">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="347" y="219" />
+                <mxPoint x="347" y="263" />
+                <mxPoint x="347" y="307" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:SW_OFI-&gt;PC_GER#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.4;exitY=1;entryX=0.5;entryY=0;" mermaidBaseValue="" id="mV-ksIXwEmNgvF4IsC9P-44">
+          <mxCell edge="1" parent="mV-ksIXwEmNgvF4IsC9P-39" source="mV-ksIXwEmNgvF4IsC9P-40" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.4;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="mV-ksIXwEmNgvF4IsC9P-42">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="128" y="219" />
+                <mxPoint x="128" y="263" />
+                <mxPoint x="128" y="307" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="RED CRITICA AISLADA - ALTA SEGURIDAD" mermaidId="n:CRITICA" mermaidBaseStyle="html=1;whiteSpace=wrap;strokeWidth=3;verticalAlign=top;fillColor=#ffebee;strokeColor=#8b0000;fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" mermaidBaseValue="RED CRITICA AISLADA - ALTA SEGURIDAD" id="mV-ksIXwEmNgvF4IsC9P-45">
+          <mxCell parent="mV-ksIXwEmNgvF4IsC9P-28" style="html=1;whiteSpace=wrap;strokeWidth=3;verticalAlign=top;fillColor=#ffebee;strokeColor=#8b0000;fontColor=light-dark(#333333,#cccccc);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;" vertex="1">
+            <mxGeometry height="479" width="567" x="113" y="1034" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Switch Core&#xa;Segmento Air-Gapped Logico" mermaidId="n:SW_CORE" mermaidBaseStyle="html=1;shape=parallelogram;perimeter=parallelogramPerimeter;fixedSize=1;size=26.5;strokeWidth=3;whiteSpace=wrap;fillColor=#8b0000;strokeColor=#4a0000;fontColor=#ffffff;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;fontStyle=1;" mermaidBaseValue="Switch Core&#xa;Segmento Air-Gapped Logico" id="mV-ksIXwEmNgvF4IsC9P-46">
+          <mxCell parent="mV-ksIXwEmNgvF4IsC9P-45" style="html=1;shape=parallelogram;perimeter=parallelogramPerimeter;fixedSize=1;size=26.5;strokeWidth=3;whiteSpace=wrap;fillColor=#8b0000;strokeColor=#4a0000;fontColor=#ffffff;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;fontStyle=1;" vertex="1">
+            <mxGeometry height="53" width="259" x="133" y="45" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Datacenter&#xa;Base de Datos Principal&#xa;(Core Bancario)" mermaidId="n:DB" mermaidBaseStyle="html=1;shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=10;strokeWidth=3;whiteSpace=wrap;fillColor=#8b0000;strokeColor=#4a0000;fontColor=#ffffff;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;fontStyle=1;" mermaidBaseValue="Datacenter&#xa;Base de Datos Principal&#xa;(Core Bancario)" id="mV-ksIXwEmNgvF4IsC9P-47">
+          <mxCell parent="mV-ksIXwEmNgvF4IsC9P-45" style="html=1;shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=10;strokeWidth=3;whiteSpace=wrap;fillColor=#8b0000;strokeColor=#4a0000;fontColor=#ffffff;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;fontStyle=1;" vertex="1">
+            <mxGeometry height="101" width="182" x="350" y="316" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Cajeros Automaticos&#xa;Red ATM Dedicada" mermaidId="n:ATM" mermaidBaseStyle="ellipse;html=1;aspect=fixed;strokeWidth=3;whiteSpace=wrap;fillColor=#8b0000;strokeColor=#4a0000;fontColor=#ffffff;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;fontStyle=1;" mermaidBaseValue="Cajeros Automaticos&#xa;Red ATM Dedicada" id="mV-ksIXwEmNgvF4IsC9P-48">
+          <mxCell parent="mV-ksIXwEmNgvF4IsC9P-45" style="ellipse;html=1;aspect=fixed;strokeWidth=3;whiteSpace=wrap;fillColor=#8b0000;strokeColor=#4a0000;fontColor=#ffffff;fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontSize=16;fontStyle=1;" vertex="1">
+            <mxGeometry height="176" width="176" x="35" y="278" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" mermaidId="e:SW_CORE-&gt;DB#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.65;exitY=1;entryX=0.5;entryY=0;" mermaidBaseValue="" id="mV-ksIXwEmNgvF4IsC9P-49">
+          <mxCell edge="1" parent="mV-ksIXwEmNgvF4IsC9P-45" source="mV-ksIXwEmNgvF4IsC9P-46" style="curved=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);exitX=0.65;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="mV-ksIXwEmNgvF4IsC9P-47">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="441" y="190" />
+                <mxPoint x="441" y="234" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Protocolo Cifrado Propietario&#xa;Canal Dedicado ATM" mermaidId="e:SW_CORE-&gt;ATM#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeWidth=3.5;endSize=3;startSize=3;strokeColor=light-dark(#333333,#cccccc);html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=0.38;exitY=1;entryX=0.5;entryY=0;" mermaidBaseValue="Protocolo Cifrado Propietario&#xa;Canal Dedicado ATM" id="mV-ksIXwEmNgvF4IsC9P-50">
+          <mxCell edge="1" parent="mV-ksIXwEmNgvF4IsC9P-45" source="mV-ksIXwEmNgvF4IsC9P-46" style="curved=1;startArrow=none;endArrow=block;endSize=3;strokeWidth=3.5;startSize=3;strokeColor=light-dark(#333333,#cccccc);html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=0.38;exitY=1;entryX=0.5;entryY=0;rounded=0;" target="mV-ksIXwEmNgvF4IsC9P-48">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="123" y="190" />
+                <mxPoint x="123" y="234" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Permitir SOLO HTTPS&#xa;Puerto 443 - Inspeccion SSL" mermaidId="e:INET-&gt;FW#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeWidth=3.5;endSize=3;startSize=3;strokeColor=light-dark(#333333,#cccccc);html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.81;entryY=0;" mermaidBaseValue="Permitir SOLO HTTPS&#xa;Puerto 443 - Inspeccion SSL" id="mV-ksIXwEmNgvF4IsC9P-51">
+          <mxCell edge="1" parent="mV-ksIXwEmNgvF4IsC9P-28" source="mV-ksIXwEmNgvF4IsC9P-30" style="curved=1;startArrow=none;endArrow=block;endSize=3;strokeWidth=3.5;startSize=3;strokeColor=light-dark(#333333,#cccccc);html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.81;entryY=0;rounded=0;" target="mV-ksIXwEmNgvF4IsC9P-33">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="926" y="329" />
+                <mxPoint x="926" y="373" />
+                <mxPoint x="926" y="417" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Trafico Cifrado IPSec&#xa;Autenticacion Mutua" mermaidId="e:VPN-&gt;FW#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeWidth=3.5;endSize=3;startSize=3;strokeColor=light-dark(#333333,#cccccc);html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.24;entryY=0;" mermaidBaseValue="Trafico Cifrado IPSec&#xa;Autenticacion Mutua" id="mV-ksIXwEmNgvF4IsC9P-52">
+          <mxCell edge="1" parent="mV-ksIXwEmNgvF4IsC9P-28" source="mV-ksIXwEmNgvF4IsC9P-31" style="curved=1;startArrow=none;endArrow=block;endSize=3;strokeWidth=3.5;startSize=3;strokeColor=light-dark(#333333,#cccccc);html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.24;entryY=0;rounded=0;" target="mV-ksIXwEmNgvF4IsC9P-33">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="660" y="329" />
+                <mxPoint x="660" y="373" />
+                <mxPoint x="660" y="417" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Permitir SOLO HTTPS&#xa;Denegar todo lo demas" mermaidId="e:FW-&gt;WEB#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeWidth=3.5;endSize=3;startSize=3;strokeColor=light-dark(#333333,#cccccc);html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=0;exitY=1;entryX=1;entryY=0.24;" mermaidBaseValue="Permitir SOLO HTTPS&#xa;Denegar todo lo demas" id="mV-ksIXwEmNgvF4IsC9P-53">
+          <mxCell edge="1" parent="mV-ksIXwEmNgvF4IsC9P-28" source="mV-ksIXwEmNgvF4IsC9P-33" style="curved=1;startArrow=none;endArrow=block;endSize=3;strokeWidth=3.5;startSize=3;strokeColor=light-dark(#333333,#cccccc);html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=0;exitY=1;entryX=1;entryY=0.24;rounded=0;" target="mV-ksIXwEmNgvF4IsC9P-38">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="479" y="559" />
+                <mxPoint x="479" y="603" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Salida a Internet Filtrada&#xa;Proxy Web / Control de Contenido" mermaidId="e:FW-&gt;SW_OFI#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeWidth=3.5;endSize=3;startSize=3;strokeColor=light-dark(#333333,#cccccc);html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.9;entryX=0.15;entryY=0;" mermaidBaseValue="Salida a Internet Filtrada&#xa;Proxy Web / Control de Contenido" id="mV-ksIXwEmNgvF4IsC9P-54">
+          <mxCell edge="1" parent="mV-ksIXwEmNgvF4IsC9P-28" source="mV-ksIXwEmNgvF4IsC9P-33" style="curved=1;startArrow=none;endArrow=block;endSize=3;strokeWidth=3.5;startSize=3;strokeColor=light-dark(#333333,#cccccc);html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=1;exitY=0.9;entryX=0.15;entryY=0;rounded=0;" target="mV-ksIXwEmNgvF4IsC9P-40">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1150" y="559" />
+                <mxPoint x="1150" y="603" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="BLOQUEO TOTAL desde Oficinas&#xa;Sin excepcion directa" mermaidId="e:FW-&gt;SW_CORE#0" mermaidBaseStyle="curved=1;startArrow=none;endArrow=block;endSize=7;strokeWidth=3.5;endSize=3;startSize=3;strokeColor=light-dark(#333333,#cccccc);html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=0.17;exitY=1;entryX=0.68;entryY=0;" mermaidBaseValue="BLOQUEO TOTAL desde Oficinas&#xa;Sin excepcion directa" id="mV-ksIXwEmNgvF4IsC9P-55">
+          <mxCell edge="1" parent="mV-ksIXwEmNgvF4IsC9P-28" source="mV-ksIXwEmNgvF4IsC9P-33" style="curved=1;startArrow=none;endArrow=block;endSize=3;strokeWidth=3.5;startSize=3;strokeColor=light-dark(#333333,#cccccc);html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=0.17;exitY=1;entryX=0.68;entryY=0;rounded=0;" target="mV-ksIXwEmNgvF4IsC9P-46">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="581" y="559" />
+                <mxPoint x="581" y="603" />
+                <mxPoint x="581" y="751" />
+                <mxPoint x="581" y="899" />
+                <mxPoint x="581" y="943" />
+                <mxPoint x="581" y="987" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+        <UserObject label="Consulta Autorizada y Auditada&#xa;Puerto 1433/3306 - Solo Lectura" mermaidId="e:WEB-&gt;SW_CORE#0" mermaidBaseStyle="curved=1;dashed=1;dashPattern=2 3;fixDash=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.35;entryY=0;" mermaidBaseValue="Consulta Autorizada y Auditada&#xa;Puerto 1433/3306 - Solo Lectura" id="mV-ksIXwEmNgvF4IsC9P-56">
+          <mxCell edge="1" parent="mV-ksIXwEmNgvF4IsC9P-28" source="mV-ksIXwEmNgvF4IsC9P-38" style="curved=1;dashed=1;dashPattern=2 3;fixDash=1;startArrow=none;endArrow=block;endSize=7;strokeColor=light-dark(#333333,#cccccc);html=1;fontSize=16;labelBackgroundColor=light-dark(#E8E8E88D,#2a2a2a8D);fontFamily=Trebuchet MS,Verdana,Arial,sans-serif;fontColor=light-dark(#333333,#cccccc);exitX=0.5;exitY=1;entryX=0.35;entryY=0;rounded=0;" target="mV-ksIXwEmNgvF4IsC9P-46">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="198" y="899" />
+                <mxPoint x="198" y="943" />
+                <mxPoint x="198" y="987" />
+              </Array>
+            </mxGeometry>
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
